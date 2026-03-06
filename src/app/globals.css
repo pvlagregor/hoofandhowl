@@ -1,26 +1,55 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Colors — derived from base navy #1C2D48 */
+  --color-cream: #F2F0EC;          /* warm ivory background */
+  --color-cream-dark: #E4E1DA;     /* alternate section background */
+  --color-warm-white: #F9F7F4;     /* card backgrounds */
+  --color-taupe: #7E8D9E;          /* muted blue-gray — secondary text, borders */
+  --color-taupe-dark: #3A4A5C;     /* blue-gray — primary body text */
+  --color-charcoal: #1C2D48;       /* deep navy — headings, primary dark */
+  --color-gold: #C9A84C;           /* warm gold accent — CTAs, highlights */
+  --color-gold-light: #D9BC6A;     /* lighter gold — hover states */
+  --color-gold-pale: #F0E8D2;      /* pale gold tint — subtle backgrounds */
+  --color-sage: #7BA0B8;           /* steel blue — subtle accent */
+  --color-deep-brown: #101D30;     /* deepest navy — footer, dark sections */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Fonts */
+  --font-serif: var(--font-heading), Georgia, serif;
+  --font-sans: var(--font-raleway), system-ui, sans-serif;
+
+  /* Letter spacing */
+  --tracking-luxury: 0.15em;
+  --tracking-wide: 0.08em;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* Ken Burns animation for hero */
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

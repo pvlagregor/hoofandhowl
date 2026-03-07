@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { dmSerif, raleway } from "@/lib/fonts";
 import { SITE } from "@/lib/constants";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -51,9 +49,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Header />
         <main>{children}</main>
-        <Footer />
       </body>
     </html>
   );

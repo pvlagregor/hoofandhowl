@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { dmSerif, raleway } from "@/lib/fonts";
 import { SITE } from "@/lib/constants";
 import Header from "@/components/layout/Header";
@@ -43,7 +44,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSerif.variable} ${raleway.variable}`}>
       <body className="antialiased">
-
+        {process.env.NEXT_PUBLIC_GTM_ID && (
+          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

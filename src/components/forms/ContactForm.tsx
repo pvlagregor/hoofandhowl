@@ -1,10 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "@/components/ui/Button";
+import { trackEvent } from "@/lib/tracking";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const hasTrackedFormStart = useRef(false);
+
+  function handleFirstInteraction() {
+    if (hasTrackedFormStart.current) return;
+    hasTrackedFormStart.current = true;
+    trackEvent("lead_form_start", {
+      form_name: "contact_form",
+      page_path: window.location.pathname,
+    });
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -19,6 +30,14 @@ export default function ContactForm() {
       });
 
       if (res.ok) {
+        trackEvent("generate_lead", {
+          lead_type: "contact_inquiry",
+          form_name: "contact_form",
+          service: "general",
+          page_path: window.location.pathname,
+          page_title: document.title,
+          lead_source_ui: "contact_page",
+        });
         setSubmitted(true);
         form.reset();
       }
@@ -51,6 +70,7 @@ export default function ContactForm() {
           type="text"
           name="name"
           required
+          onFocus={handleFirstInteraction}
           className="w-full bg-transparent border-b border-taupe/30 py-3 text-base font-light text-charcoal placeholder:text-taupe/85 focus:border-gold focus:outline-none transition-colors duration-300"
           placeholder="Your name"
         />

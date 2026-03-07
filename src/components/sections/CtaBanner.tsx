@@ -1,6 +1,7 @@
 import Button from "@/components/ui/Button";
 import { SITE } from "@/lib/constants";
 import FadeIn from "@/components/animations/FadeIn";
+import TrackedPhoneLink from "@/components/ui/TrackedPhoneLink";
 
 interface CtaBannerProps {
   heading?: string;
@@ -37,12 +38,13 @@ export default function CtaBanner({
           {showPhone && (
             <p className="mt-6 text-sm text-cream/40">
               or call{" "}
-              <a
+              <TrackedPhoneLink
                 href={SITE.phoneHref}
+                placement="cta_banner"
                 className="text-cream/60 hover:text-gold transition-colors"
               >
                 {SITE.phone}
-              </a>
+              </TrackedPhoneLink>
             </p>
           )}
         </FadeIn>

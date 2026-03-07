@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NAV_LINKS, SITE } from "@/lib/constants";
+import TrackedPhoneLink from "@/components/ui/TrackedPhoneLink";
 
 export default function Footer() {
   return (
@@ -44,12 +45,13 @@ export default function Footer() {
               Get in Touch
             </p>
             <div className="flex flex-col gap-3 text-sm">
-              <a
+              <TrackedPhoneLink
                 href={SITE.phoneHref}
+                placement="footer"
                 className="hover:text-gold transition-colors duration-300"
               >
                 {SITE.phone}
-              </a>
+              </TrackedPhoneLink>
               <a
                 href={`mailto:${SITE.email}`}
                 className="hover:text-gold transition-colors duration-300"

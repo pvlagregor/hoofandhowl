@@ -1,3 +1,4 @@
+import Image from "next/image";
 import FadeIn from "@/components/animations/FadeIn";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
@@ -52,16 +53,168 @@ export default function QuizResult({
               What Your Style Looks Like on Real Walls
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[1, 2, 3].map((n) => (
-                <div
-                  key={n}
-                  className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded flex items-center justify-center"
-                >
-                  <span className="text-taupe/40 text-sm uppercase tracking-luxury">
-                    Portrait Example {n}
-                  </span>
-                </div>
-              ))}
+              {styleKey === "HC" ? (
+                <>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Heirloom Example 1.jpg"
+                      alt="Heirloom Classic Example 1"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Heirloom Example 4.jpg"
+                      alt="Heirloom Classic Example 2"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Heirloom Example 2.jpg"
+                      alt="Heirloom Classic Example 3"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </>
+              ) : styleKey === "HH" ? (
+                <>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Heart and Home Example 1.jpg"
+                      alt="Heart and Home Example 1"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Heart and Home Example 4.jpg"
+                      alt="Heart and Home Example 2"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Heart and Home Example 2.jpg"
+                      alt="Heart and Home Example 3"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </>
+              ) : styleKey === "BS" ? (
+                <>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Bold Statement Piece Example 1.jpg"
+                      alt="Bold Statement Piece Example 1"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Bold Statement Piece Example 3.jpg"
+                      alt="Bold Statement Piece Example 2"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Bold Statement Piece Example 2.jpg"
+                      alt="Bold Statement Piece Example 3"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </>
+              ) : styleKey === "NS" ? (
+                <>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Natural Soul Example 1.jpg"
+                      alt="Natural Soul Example 1"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Natural Soul Example 4.jpg"
+                      alt="Natural Soul Example 2"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Natural Soul Example 2.jpg"
+                      alt="Natural Soul Example 3"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </>
+              ) : styleKey === "SM" ? (
+                <>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Sophisticated Modern Example 1.jpg"
+                      alt="Sophisticated Modern Example 1"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Sophisticated Modern Example 2.jpg"
+                      alt="Sophisticated Modern Example 2"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded overflow-hidden">
+                    <Image
+                      src="/images/quiz/portrait-style/Sophisticated Modern Example 3.jpg"
+                      alt="Sophisticated Modern Example 3"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </>
+              ) : (
+                [1, 2, 3].map((n) => (
+                  <div
+                    key={n}
+                    className="aspect-[4/3] bg-charcoal/50 border border-taupe/20 rounded flex items-center justify-center"
+                  >
+                    <span className="text-taupe/40 text-sm uppercase tracking-luxury">
+                      Portrait Example {n}
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
           </FadeIn>
         </Container>

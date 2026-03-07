@@ -49,10 +49,12 @@ const STEPS = [
 ];
 
 const PORTFOLIO_IMAGES = [
-  { src: "/images/homepage/gallery/_DSC0036-Edit.jpg", alt: "Dog portrait — close-up with natural light", aspect: "aspect-[3/4]" },
-  { src: "/images/homepage/gallery/_8500279-Edit-2.jpg", alt: "Dog portrait — outdoor setting", aspect: "aspect-[4/5]" },
-  { src: "/images/homepage/gallery/_8509284.jpg", alt: "Dog portrait — studio lighting", aspect: "aspect-[3/4]" },
-  { src: "/images/homepage/Floating_PRO_Mockup_15_114C801.jpg", alt: "Dog portrait displayed as wall art in a styled living room", aspect: "aspect-[4/3]" },
+  { src: "/images/homepage/gallery/_8500267-Edit-2.jpg", alt: "Pet portrait", aspect: "aspect-[3/4]" },
+  { src: "/images/homepage/gallery/_8500279-Edit-2.jpg", alt: "Pet portrait", aspect: "aspect-[4/5]" },
+  { src: "/images/homepage/gallery/_8500325.jpg", alt: "Pet portrait", aspect: "aspect-square" },
+  { src: "/images/homepage/gallery/_8509284.jpg", alt: "Pet portrait", aspect: "aspect-[5/4]" },
+  { src: "/images/homepage/gallery/_A740565-Edit.jpg", alt: "Pet portrait", aspect: "aspect-[3/4]" },
+  { src: "/images/homepage/gallery/_DSC0036-Edit.jpg", alt: "Pet portrait", aspect: "aspect-[5/4]" },
 ];
 
 export default function DogPortraitsPage() {
@@ -128,7 +130,7 @@ export default function DogPortraitsPage() {
             <FadeIn delay={200}>
               <div className="relative aspect-[4/3] w-full">
                 <Image
-                  src="/images/homepage/Floating_PRO_Mockup_15_114C801.jpg"
+                  src="/images/wall-art/frames-mockups.jpg"
                   alt="Dog portrait displayed as wall art in a styled living room"
                   fill
                   className="object-cover"
@@ -149,18 +151,19 @@ export default function DogPortraitsPage() {
               subtext="Every dog is different. Every portrait should be, too. These are not templates or poses — they are portraits created to capture who your dog is, in the way only you know them."
             />
           </FadeIn>
-          <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-6">
             {PORTFOLIO_IMAGES.map((img) => (
-              <div key={img.src} className={`relative ${img.aspect} w-full overflow-hidden`}>
+              <div key={img.src} className="relative w-full overflow-hidden break-inside-avoid mb-4 md:mb-6">
                 <Image
                   src={img.src}
                   alt={img.alt}
-                  fill
-                  className="object-cover"
+                  width={400}
+                  height={300}
+                  className="w-full h-auto"
                 />
               </div>
             ))}
-          </StaggerChildren>
+          </div>
         </Container>
       </section>
 

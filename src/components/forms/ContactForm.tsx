@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import Button from "@/components/ui/Button";
-import { trackEvent } from "@/lib/tracking";
+import { trackEvent, generateEventId } from "@/lib/tracking";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -23,10 +23,12 @@ export default function ContactForm() {
     const formData = new FormData(form);
 
     try {
+      const eventId = generateEventId();
+
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(formData)),
+        body: JSON.stringify({ ...Object.fromEntries(formData), event_id: eventId }),
       });
 
       if (res.ok) {
@@ -37,6 +39,7 @@ export default function ContactForm() {
           page_path: window.location.pathname,
           page_title: document.title,
           lead_source_ui: "contact_page",
+          event_id: eventId,
         });
         setSubmitted(true);
         form.reset();

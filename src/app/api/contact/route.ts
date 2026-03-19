@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendMetaEvent } from "@/lib/meta-capi";
 
 const GHL_API_KEY = process.env.GHL_API_KEY!;
 const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID!;
@@ -36,7 +37,7 @@ async function ghlFetch(path: string, body: Record<string, unknown>) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, phone, message, source } = body;
+    const { name, email, phone, message, source, event_id } = body;
 
     if (!name || !email) {
       return NextResponse.json(
@@ -65,6 +66,18 @@ export async function POST(request: NextRequest) {
       await ghlFetch(`/contacts/${contactId}/notes`, {
         body: message,
       });
+    }
+
+    // Fire Meta CAPI event (non-blocking)
+    if (event_id) {
+      sendMetaEvent({
+        eventName: "Lead",
+        eventId: event_id,
+        url: request.headers.get("referer") || "https://hoofandhowl.com/contact",
+        userData: { email, phone, firstName, lastName },
+        ipAddress: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "",
+        userAgent: request.headers.get("user-agent") || "",
+      }).catch((err) => console.error("Meta CAPI error:", err));
     }
 
     return NextResponse.json({ success: true });

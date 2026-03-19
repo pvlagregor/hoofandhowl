@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
-import { trackEvent } from "@/lib/tracking";
+import { trackEvent, generateEventId } from "@/lib/tracking";
 import { getStoredUTM } from "./UTMCapture";
 
 const CONTACT_METHODS = ["Phone", "Email", "Either"] as const;
@@ -40,6 +40,8 @@ export default function BookingForm() {
     const utm = getStoredUTM();
 
     try {
+      const eventId = generateEventId();
+
       const res = await fetch("/api/dog-portraits", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -48,6 +50,7 @@ export default function BookingForm() {
           utm_source: utm.utm_source || undefined,
           utm_medium: utm.utm_medium || undefined,
           utm_campaign: utm.utm_campaign || undefined,
+          event_id: eventId,
         }),
       });
 
@@ -60,6 +63,7 @@ export default function BookingForm() {
           page_title: document.title,
           lead_source_ui: "landing_page",
           utm_source: utm.utm_source || "direct",
+          event_id: eventId,
         });
         router.push("/dog-portraits/thank-you");
       } else {

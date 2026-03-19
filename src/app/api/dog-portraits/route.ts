@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendMetaEvent } from "@/lib/meta-capi";
 
 const GHL_API_KEY = process.env.GHL_API_KEY!;
 const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID!;
@@ -59,6 +60,7 @@ export async function POST(request: NextRequest) {
       utm_source,
       utm_medium,
       utm_campaign,
+      event_id,
     } = body;
 
     if (!name || !email || !phone || !dogName) {
@@ -102,6 +104,18 @@ export async function POST(request: NextRequest) {
       await ghlFetch(`/contacts/${contactId}/notes`, {
         body: noteLines,
       });
+    }
+
+    // Fire Meta CAPI event (non-blocking)
+    if (event_id) {
+      sendMetaEvent({
+        eventName: "Lead",
+        eventId: event_id,
+        url: request.headers.get("referer") || "https://hoofandhowl.com/dog-portraits/book",
+        userData: { email, phone, firstName, lastName },
+        ipAddress: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "",
+        userAgent: request.headers.get("user-agent") || "",
+      }).catch((err) => console.error("Meta CAPI error:", err));
     }
 
     return NextResponse.json({ success: true });

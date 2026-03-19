@@ -6,7 +6,7 @@ import QuizQuestion from "./QuizQuestion";
 import QuizLeadForm from "./QuizLeadForm";
 import QuizResult from "./QuizResult";
 import Container from "@/components/ui/Container";
-import { trackEvent } from "@/lib/tracking";
+import { trackEvent, generateEventId } from "@/lib/tracking";
 import {
   QUIZ_QUESTIONS,
   STYLE_RESULTS,
@@ -121,6 +121,8 @@ export default function QuizClient() {
       const q8Answer = state.answers["q8"];
       const lifeStage = getLifeStageClosing(q8Answer);
 
+      const eventId = generateEventId();
+
       try {
         await fetch("/api/quiz", {
           method: "POST",
@@ -134,6 +136,7 @@ export default function QuizClient() {
             portrait_style_slug: styleResult.slug,
             emotional_memory: getAnswerLabel("q7", state.answers["q7"]),
             pet_life_stage: lifeStage?.ghlValue ?? "",
+            event_id: eventId,
           }),
         });
 
@@ -144,6 +147,7 @@ export default function QuizClient() {
           page_path: window.location.pathname,
           page_title: document.title,
           lead_source_ui: "quiz",
+          event_id: eventId,
         });
         dispatch({ type: "SHOW_RESULT", result });
       } catch {

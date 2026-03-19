@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendMetaEvent } from "@/lib/meta-capi";
 
 const GHL_API_KEY = process.env.GHL_API_KEY;
 const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest) {
       portrait_style_slug,
       emotional_memory,
       pet_life_stage,
+      event_id,
     } = body;
 
     if (!first_name || !email) {
@@ -44,13 +46,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // If GHL is not configured, log and return success
+    // If GHL is not configured, still fire CAPI then return
     if (!GHL_API_KEY || !GHL_LOCATION_ID) {
       console.warn("GHL env vars not set — quiz lead not forwarded:", {
         first_name,
         email,
         portrait_style,
       });
+      if (event_id) {
+        sendMetaEvent({
+          eventName: "Lead",
+          eventId: event_id,
+          url: request.headers.get("referer") || "https://hoofandhowl.com/quiz/portrait-style",
+          userData: { email, firstName: first_name },
+          ipAddress: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "",
+          userAgent: request.headers.get("user-agent") || "",
+        }).catch((err) => console.error("Meta CAPI error:", err));
+      }
       return NextResponse.json({ success: true });
     }
 
@@ -96,6 +108,18 @@ export async function POST(request: NextRequest) {
       await ghlFetch(`/contacts/${contactId}/notes`, {
         body: noteLines.join("\n"),
       });
+    }
+
+    // Fire Meta CAPI event (non-blocking)
+    if (event_id) {
+      sendMetaEvent({
+        eventName: "Lead",
+        eventId: event_id,
+        url: request.headers.get("referer") || "https://hoofandhowl.com/quiz/portrait-style",
+        userData: { email, firstName: first_name },
+        ipAddress: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "",
+        userAgent: request.headers.get("user-agent") || "",
+      }).catch((err) => console.error("Meta CAPI error:", err));
     }
 
     return NextResponse.json({ success: true });

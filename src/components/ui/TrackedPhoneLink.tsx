@@ -1,6 +1,6 @@
 "use client";
 
-import { trackEvent } from "@/lib/tracking";
+import { trackEvent, generateEventId } from "@/lib/tracking";
 
 interface TrackedPhoneLinkProps {
   href: string;
@@ -19,14 +19,16 @@ export default function TrackedPhoneLink({
     <a
       href={href}
       className={className}
-      onClick={() =>
+      onClick={() => {
+        const eventId = generateEventId();
         trackEvent("phone_click", {
           contact_method: "phone",
           placement,
           page_path: window.location.pathname,
           page_title: document.title,
-        })
-      }
+          event_id: eventId,
+        });
+      }}
     >
       {children}
     </a>
